@@ -24,7 +24,7 @@ function App() {
         <p>You've just created your first Miro app!</p>
         <p>
           To explore more and build your own app, see the Miro Developer
-          Platform documentation.
+          Platform documentation. 1
         </p>
       </div>
       <div className="cs1 ce12">
