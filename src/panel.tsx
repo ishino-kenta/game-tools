@@ -11,7 +11,7 @@ async function addSticky() {
 
 function App() {
   React.useEffect(() => {
-    addSticky();
+    // addSticky();
   }, []);
 
   return (

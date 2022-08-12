@@ -12,7 +12,7 @@ async function gather(items: Item[]) {
     const centerY = viewport.y + viewport.height / 2;
 
     for (let item of items) {
-        if (!isShape(item)) {
+        if (!isShape(item) && !isImage(item)) {
             return;
         }
         item.x = centerX - item.width / 2;
@@ -27,6 +27,14 @@ function isShape(item: Item): item is Shape {
     }
     return typeof item === 'object' &&
         item.type == 'shape';
+}
+
+function isImage(item: Item): item is Shape {
+    if (!('type' in item)) {
+        return false
+    }
+    return typeof item === 'object' &&
+        item.type == 'image';
 }
 
 async function shuffle(items: Item[]) {
@@ -47,7 +55,7 @@ async function cover(items: Item[]) {
     const centerY = viewport.y + viewport.height / 2;
 
     for (let item of items) {
-        if (isShape(item)) {
+        if (isShape(item) || isImage(item)) {
             const sample: Shape = item;
             const width: number = sample.width * 1.2;
             const height: number = sample.height;
