@@ -6,10 +6,17 @@ export function makeDeck(selection: Item[]) {
     cover(selection);
 }
 
-async function gather(items: Item[]) {
-    const viewport: Rect = await miro.board.viewport.get();
-    const centerX = viewport.x + viewport.width / 2;
-    const centerY = viewport.y + viewport.height / 2;
+async function gather(items: Item[]) {0
+    let centerX: number = 0;
+    let centerY: number = 0;
+
+    for (let item of items) {
+        if (isShape(item) || isImage(item)) {
+                centerX = item.x;
+                centerY = item.y;
+            break;
+        }
+    }
 
     for (let item of items) {
         if (!isShape(item) && !isImage(item)) {
@@ -50,32 +57,22 @@ async function shuffle(items: Item[]) {
 }
 
 async function cover(items: Item[]) {
-    const viewport: Rect = await miro.board.viewport.get();
-    const centerX = viewport.x + viewport.width / 2;
-    const centerY = viewport.y + viewport.height / 2;
-
-    for (let item of items) {
-        if (isShape(item) || isImage(item)) {
-            const sample: Shape = item;
-            const width: number = sample.width * 1.2;
-            const height: number = sample.height;
-            const x: number = centerX - width / 2 + sample.width * 0.1;
-            const y: number = centerY - height / 3
-
+    for (let sample of items) {
+        if (isShape(sample) || isImage(sample)) {
             const shape: Shape = await miro.board.createShape({
                 content: '<p>Deck of cards</p>',
                 shape: 'rectangle',
                 "style": {
                     "fillColor": "#13E3EB"
                 },
-                x: x,
-                y: y,
-                width: width,
-                height: height
+                x: sample.x,
+                y: sample.y + sample.height / 5,
+                width: sample.width * 1.2,
+                height: sample.height
             });
 
             miro.board.bringToFront(shape);
+            break;
         }
-        break;
     }
 }
