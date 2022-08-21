@@ -22,8 +22,8 @@ async function gather(items: Item[]) {0
         if (!isShape(item) && !isImage(item)) {
             return;
         }
-        item.x = centerX - item.width / 2;
-        item.y = centerY - item.height / 2;
+        item.x = centerX;
+        item.y = centerY;
         item.sync();
     }
 }
